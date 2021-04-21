@@ -60,7 +60,7 @@ public class HelloController {
 
         if (minutesToNow < 20)
         {
-            return new ModelAndView("wait", "minutesToNow", minutesToNow);
+            //return new ModelAndView("wait", "minutesToNow", minutesToNow);
         }
         List<LastCheckAt> lcaList = lastCheckAtMapper.listLCA();
         Map<String, Object> params = new HashMap<>();
