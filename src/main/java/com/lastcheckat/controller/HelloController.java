@@ -4,6 +4,7 @@ import com.lastcheckat.mapper.ItemMapper;
 import com.lastcheckat.mapper.LastCheckAtMapper;
 import com.lastcheckat.model.Item;
 import com.lastcheckat.model.LastCheckAt;
+import com.lastcheckat.utils.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +17,12 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 public class HelloController {
+
+    private long lastCheckPageAt = 0;
 
     @Autowired
     private ItemMapper itemMapper;
@@ -51,9 +55,18 @@ public class HelloController {
     @GetMapping("/listLastCheckAt")
     public ModelAndView listLastCheckAt()
     {
+
+        long minutesToNow = TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis() - lastCheckPageAt);
+
+        if (minutesToNow < 20)
+        {
+            return new ModelAndView("wait", "minutesToNow", minutesToNow);
+        }
         List<LastCheckAt> lcaList = lastCheckAtMapper.listLCA();
         Map<String, Object> params = new HashMap<>();
+        lcaList.stream().forEach(lca -> lca.setDiff(TimeUtil.diff(System.currentTimeMillis(), lca.getLastCheckAt().getTime())));
         params.put("lcaList", lcaList);
+        lastCheckPageAt = System.currentTimeMillis();
         return new ModelAndView("lastCheckAt", params);
     }
 

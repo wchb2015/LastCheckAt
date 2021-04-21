@@ -1,12 +1,10 @@
 package com.lastcheckat.model;
 
-import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-@Builder
 public class LastCheckAt {
 
     private String name;
@@ -16,4 +14,11 @@ public class LastCheckAt {
     private boolean isCurrent;
     private Date createdAt;
 
+
+    private String diff;
+
+    public void setDiff(String diff)
+    {
+        this.diff = diff;
+    }
 }

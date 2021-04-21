@@ -21,6 +21,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Last Check Time</th>
+                    <th>Last Check Time</th>
                     <th>Update</th>
                 </tr>
                 </thead>
@@ -29,6 +30,7 @@
                     <tr>
                         <td>${item.name}</td>
                         <td>${item.lastCheckAt?string('MMM-dd-yy HH:mm:ss')}</td>
+                        <td>${item.diff}</td>
                         <td>
                             <a class="btn btn-info" href="/update?id=${item.id}">Update</a>
                         </td>
