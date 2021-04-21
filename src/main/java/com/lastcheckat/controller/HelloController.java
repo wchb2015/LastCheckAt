@@ -60,10 +60,9 @@ public class HelloController {
 
     @RequestMapping(value = "/update", method = RequestMethod.GET,
             produces = {"application/json;charset=UTF-8"})
-    @ResponseBody
     public String update(@RequestParam("id") Long id)
     {
         lastCheckAtMapper.updateLastCheckAt(id);
-        return "success";
+        return "redirect:/listLastCheckAt";
     }
 }
